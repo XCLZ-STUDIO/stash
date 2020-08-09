@@ -33,7 +33,7 @@ Stash的命名取自Python**ista** **Sh**ell。
 ## 安装
 **StaSh可以通过一行python命令轻松安装**
 ```Python
-import requests as r; exec(r.get('https://x_tu.gitee.io/stashport/files/get-stash.py').content)
+import requests as r; exec(r.get('https://x_tu.gitee.io/stashport/files/getstash.py').content)
 ```
 将该代码粘贴到Pythonista交互式提示中并执行。 StaSh将作为Python模块安装在`site-packages`文件夹(`~/Documents/site-packages/stash`)下，并复制**启动脚本(`~/Documents/launch_stash.py`)**，以便于使用。
 

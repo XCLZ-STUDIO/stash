@@ -1126,6 +1126,10 @@ class PyPIRepository(PackageRepository):
 
         print('Downloading package ...')
 
+        #TODO lalallala
+        target['url'] = target['url'].replace('files.pythonhosted.org', 'pypi.tuna.tsinghua.edu.cn')
+        #TODO lallalala
+
         worker = _stash('wget {} -o $TMPDIR/{}'.format(target['url'], target['filename']))
 
         if worker.state.return_value != 0:
