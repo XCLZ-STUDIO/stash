@@ -7,13 +7,14 @@ import zipfile
 import time
 
 
-DEFAULT_REPO = "ywangd"
+DEFAULT_REPO = "x_tu"
 DEFAULT_BRANCH = "master"
 TMPDIR = os.environ.get('TMPDIR', os.environ.get('TMP'))
-URL_TEMPLATE = 'https://github.com/{}/stash/archive/{}.zip'
+# URL_TEMPLATE = 'https://gitee.com/{}/stash/repository/archive/{}.zip'
+URL_ZIPFILE = 'https://x_tu.gitee.io/stashport/files/stash.zip'
 TEMP_ZIPFILE = os.path.join(TMPDIR, 'StaSh.zip')
 TEMP_PTI = os.path.join(TMPDIR, 'ptinstaller.py')
-URL_PTI = 'https://raw.githubusercontent.com/ywangd/pythonista-tools-installer/master/ptinstaller.py'
+URL_PTI = 'https://x_tu.gitee.io/stashport/files/ptinstaller.py'
 BASE_DIR = os.path.expanduser('~')
 DEFAULT_INSTALL_DIR = os.path.join(BASE_DIR, 'Documents/site-packages/stash')
 DEFAULT_PTI_PATH = os.path.join(DEFAULT_INSTALL_DIR, "bin", "ptinstaller.py")
@@ -53,7 +54,8 @@ def download_stash(repo=DEFAULT_REPO, branch=DEFAULT_BRANCH, outpath=TEMP_ZIPFIL
     :param verbose: if True, print additional information
     :type verbose: bool
     """
-    url = URL_TEMPLATE.format(repo, branch)
+    # url = URL_TEMPLATE.format(repo, branch)
+    url = URL_ZIPFILE
     if verbose:
         print('Downloading {} ...'.format(url))
     r = requests.get(url, stream=True)
@@ -231,24 +233,25 @@ def setup_install(repo=DEFAULT_REPO, branch=DEFAULT_BRANCH, install_path=None, a
     tp = os.path.join(TMPDIR, "getstash-{}".format(time.time()))
     unzip_into(zp, tp, verbose=verbose)
     # run setup.py
-    os.chdir(tp)
-    argv = ["setup.py", "install"]
-    if as_user:
-        argv.append("--user")
-    if install_path is not None:
-        argv += ["--prefix", install_path]
-    if dryrun:
-        argv.append("--dry-run")
-    sys.argv = argv
-    fp = os.path.abspath("setup.py")
-    ns = {
-        "__name__": "__main__",
-        "__file__": fp,
-    }
-    with open(fp, "rU") as fin:
-        content = fin.read()
-        code = compile(content, fp, "exec", dont_inherit=True)
-        exec(code, ns, ns)
+
+    # os.chdir(tp)
+    # argv = ["setup.py", "install"]
+    # if as_user:
+    #     argv.append("--user")
+    # if install_path is not None:
+    #     argv += ["--prefix", install_path]
+    # if dryrun:
+    #     argv.append("--dry-run")
+    # sys.argv = argv
+    # fp = os.path.abspath("setup.py")
+    # ns = {
+    #     "__name__": "__main__",
+    #     "__file__": fp,
+    # }
+    # with open(fp, "rU") as fin:
+    #     content = fin.read()
+    #     code = compile(content, fp, "exec", dont_inherit=True)
+    #     exec(code, ns, ns)
     
 
 def main(defs={}):
@@ -266,30 +269,13 @@ def main(defs={}):
     is_update = '_IS_UPDATE' in defs                         # True if update
     install_path = defs.get("_target", None)                 # target path
     launcher_path = defs.get("_launcher_path", None)         # target path for launch_stash.py
-    force_dist = defs.get("_force_dist", None)               # force install method
     zippath = defs.get("_zippath", None)                     # alternate path of zipfile to use
-    dryrun = defs.get("_dryrun", None)                       # do not do anything if True
-    asuser = defs.get("_asuser", None)                       # install as user if True
     
-    # find out which install to use
-    if force_dist is None:
-        if IN_PYTHONISTA:
-            dist = "pythonista"
-        else:
-            dist = "setup"
-    else:
-        dist = force_dist
-    
-    if dist.lower() == "pythonista":
-        if install_path is None:
-            install_path = DEFAULT_INSTALL_DIR
-        if launcher_path is None:
-            launcher_path = os.path.join(BASE_DIR, "Documents", "launch_stash.py")
-        pythonista_install(install_path, repo=repo, branch=branch, launcher_path=launcher_path, zippath=zippath, verbose=True)
-    elif dist.lower() == "setup":
-        setup_install(repo, branch, install_path=install_path, zippath=zippath, dryrun=dryrun, as_user=asuser, verbose=True)
-    else:
-        raise ValueError("Invalid install type: {}".format(dist))
+    if install_path is None:
+        install_path = DEFAULT_INSTALL_DIR
+    if launcher_path is None:
+        launcher_path = os.path.join(BASE_DIR, "Documents", "launch_stash.py")
+    pythonista_install(install_path, repo=repo, branch=branch, launcher_path=launcher_path, zippath=zippath, verbose=True)
         
     if not is_update:
         # print additional instructions
