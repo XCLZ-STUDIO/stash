@@ -47,6 +47,11 @@ OLD_SITE_PACKAGES_FOLDER = _stash.libdist.SITE_PACKAGES_FOLDER_6
 BUNDLED_MODULES = _stash.libdist.BUNDLED_MODULES
 BLACKLIST_PATH = os.path.join(os.path.expandvars("$STASH_ROOT"), "data", "pip_blacklist.json")
 
+# PYPI_URL = 'https://pypi.python.org/pypi'
+# PYPI_JSON_FORMAT = 'https://pypi.python.org/pypi/{}/json'
+PYPI_URL = 'https://pypi.tuna.tsinghua.edu.cn/pypi'
+PYPI_JSON_FORMAT = 'https://pypi.tuna.tsinghua.edu.cn/pypi/{}/json'
+
 # Some packages use wrong name for their dependencies
 PACKAGE_NAME_FIXER = {
     'lazy_object_proxy': 'lazy-object-proxy',
@@ -978,7 +983,7 @@ class PyPIRepository(PackageRepository):
             # py3
             import xmlrpc.client as xmlrpclib
         # DO NOT USE self.pypi, it's there just for search, it's obsolete/legacy
-        self.pypi = xmlrpclib.ServerProxy('https://pypi.python.org/pypi')
+        self.pypi = xmlrpclib.ServerProxy(PYPI_URL)
         self.standard_package_names = {}
     
     def _check_blacklist(self, pkg_name):
@@ -1011,7 +1016,7 @@ class PyPIRepository(PackageRepository):
     def get_standard_package_name(self, pkg_name):
         if pkg_name not in self.standard_package_names:
             try:
-                r = requests.get('https://pypi.python.org/pypi/{}/json'.format(pkg_name))
+                r = requests.get(JSON_FORMAT.format(pkg_name))
                 self.standard_package_names[pkg_name] = r.json()['info']['name']
             except:
                 return pkg_name
@@ -1031,7 +1036,7 @@ class PyPIRepository(PackageRepository):
         return hits
 
     def _package_data(self, pkg_name):
-        r = requests.get('https://pypi.python.org/pypi/{}/json'.format(pkg_name))
+        r = requests.get(PYPI_JSON_FORMAT.format(pkg_name))
         if not r.status_code == requests.codes.ok:
             raise PipError('Failed to fetch package release urls')
 
@@ -1061,6 +1066,7 @@ class PyPIRepository(PackageRepository):
 
     def download(self, pkg_name, ver_spec, flags=DEFAULT_FLAGS):
         print('Querying PyPI ... ')
+        print('Using Source %s' % PYPI_URL)
         pkg_name = self.get_standard_package_name(pkg_name)
         pkg_data = self._package_data(pkg_name)
         hit = self._determin_hit(pkg_data, ver_spec, flags=flags)
