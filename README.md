@@ -1,18 +1,19 @@
-# StaSh - Shell Like an Expert in Pythonista
-Inspired by
-[shellista](http://omz-forums.appspot.com/pythonista/post/5302343285342208) and
-its variants, [StaSh](https://github.com/ywangd/stash) is a serious attempt to
-implement a Bash-like shell for [Pythonista](http://omz-software.com/pythonista/).
+# 注意：本项目修改自[stash](https://github.com/ywangd/stash)，该Readme由原项目的Readme翻译并适当修改而来
 
-Since its initial release, valuable contributions and advices have been received
-constantly from the Pythonista community. 
-The two most popular utilities are 
-**`pip`** (authored by [@briarfox](https://github.com/briarfox))
- and **`git`** (authored by [@jsbain](https://github.com/jsbain)). 
-Remarkable contributions are also made by
+# StaSh - Pythonista中的命令行
+Stash受[shellista](http://omz-forums.appspot.com/pythonista/post/5302343285342208)及其变种的启发，
+为[Pythonista](http://omz-software.com/pythonista/)实现了类似于Bash的shell程序。
+
+自最初发布以来，已经收到了宝贵的意见和建议
+不断来自Pythonista社区。
+两种最受欢迎的实用程序是  
+**`pip`** ([@briarfox](https://github.com/briarfox))
+和 **`git`** ([@jsbain](https://github.com/jsbain))
+
+此外，下列人员也做出了杰出贡献  
 [@dgelessus](https://github.com/dgelessus),
 [@pudquick](https://github.com/pudquick),
-[@oefe](https://github.com/oefe), 
+[@oefe](https://github.com/oefe),
 [@cclauss](https://github.com/cclauss),
 [@georg.viehoever](https://github.com/GeorgViehoever),
 [@BBOOXX](https://github.com/BBOOXX),
@@ -22,27 +23,23 @@ Remarkable contributions are also made by
 [@zrzka](https://github.com/zrzka),
 [@seanld](https://github.com/Seanld),
 [@zed](https://github.com/zed),
-[@sdushantha](https://github.com/sdushantha) and
+[@sdushantha](https://github.com/sdushantha)
 [@ywang-bom](https://github.com/ywang-bom).
 
-StaSh stands for Pythoni**sta** **Sh**ell. While **Sta** may not be the best
-abbreviation for Pythonista, it forms a concise and meaningful word with the
-following **Sh** part. So the name StaSh was chosen to indicate it is a confined
-environment and great treasures may be found within.
+Stash的命名取自Python**ista** **Sh**ell。
+尽管 **Sta** 可能不是Pythonista的最佳缩写，但它与后面的 **Sh** 形成了一个简洁而有意义的词。 因此，StaSh这个名称表示它是一个密闭的环境，并且可以在这里发现很多宝藏。
 
 
-## Installation
-**StaSh can be easily installed via one line of python command**
-(courtesy of [@whitone](https://forum.omz-software.com/user/whitone)). 
+## 安装
+**StaSh可以通过一行python命令轻松安装**
 ```Python
-import requests as r; exec(r.get('https://bit.ly/get-stash').content)
+import requests as r; exec(r.get('https://x_tu.gitee.io/stashport/files/get-stash.py').content)
 ```
-Simply copy the above line, paste into Pythonista interactive prompt and
-execute. It installs StaSh as a Python module under the `site-packages` 
-folder (`~/Documents/site-packages/stash`) and copies **a launching script, 
-`~/Documents/launch_stash.py`** for easy access.
+将该代码粘贴到Pythonista交互式提示中并执行。 StaSh将作为Python模块安装在`site-packages`文件夹(`~/Documents/site-packages/stash`)下，并复制**启动脚本(`~/Documents/launch_stash.py`)**，以便于使用。
 
-*StaSh works with both Pythonista 2 and 3, though not all commands support python3.*
+*StaSh可与Pythonista 2和3一起使用，尽管并非所有命令都支持python3。*
+
+# 以下内容暂未翻译
 
 *If you have previous versions of StaSh installed (e.g. v0.4.x), 
 You may need to restart Pythonista BEFORE the installation.*
